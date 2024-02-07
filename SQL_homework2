@@ -1,0 +1,45 @@
+1) what order is the most expensive, which one is the cheapest
+    SELECT MAX(Total)
+    FROM Invoice
+
+    SELECT MIN(Total)
+    FROM Invoice
+
+2) which city has the most orders
+    SELECT Invoice.BillingCity COUNT (*) AS Invoice_total
+    FROM Invoice
+    GROUP BY Invoice.BillingCity
+    ORDER BY Invoice_totak DESC
+
+3) how many tracks have this MediaType: Protected AAC audio file
+    SELECT COUNT (*)
+    FROM Track
+    JOIN MediaType ON Track.MediaTypeId=MediaType.MediaTypeId
+    WHERE MediaType.Name="Protected AAC audio file"
+
+4) what artist has the most albums
+    SELECT Artist.Name, COUNT (*) AS Album_total
+    FROM Artist
+    JOIN ALbum ON Artist.ArtistId=Album.ArtistId
+    GROUP BY Album.ArtistId
+    ORDER BY Album_total DESC
+
+5) what genre has the most tracks
+    SELECT Genre.Name, COUNT (*) AS Genre_total
+    FROM Genre
+    JOIN Track OM Genre.GenreId=Track.GenreId
+    GROUP BY Track.GenreId
+    ORDER BY Genre_total DESC
+    
+6) which customer spent the most money
+    SELECT Customer.FirstName, Customer.LastName, SUM (Invoice.Total), AS Invoice_sum
+    FROM Customer
+    JOIN Invoice ON Customer.CustomerID=Invoice.CustomerId
+    GROUP BY Invoice.CustomerId
+    ORDER BY Invoice_sum DESC
+
+7) what songs were bought with each order
+    SELECT Invoice.InvoiceId, Track.Name
+    FROM Invoice
+    JOIN Track ON Track.TrackId=InvoiceLine.TrackId
+    JOIN InvoiceLine ON Invoice.InvoiceId=InvoiceLine.InvoiceId
